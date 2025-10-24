@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="MyPath.StatisticsPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Статистика">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="16">
+
+            <!-- Заголовок -->
+            <Label Text="Статистика привычек" 
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center"/>
+
+            <!-- Общая статистика -->
+            <Border BackgroundColor="#1E1E1E"
+                    Stroke="#666666"
+                    StrokeShape="RoundRectangle 8"
+                    Padding="16">
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Процент выполнения"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="White"/>
+
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="*,*" 
+                          ColumnSpacing="15" RowSpacing="10">
+
+                        <!-- Всего привычек -->
+                        <Border Grid.Row="0" Grid.Column="0"
+                                BackgroundColor="#2E2E2E"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="15">
+                            <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                                <Label Text="{Binding TotalHabits}"
+                                       FontSize="20"
+                                       FontAttributes="Bold"
+                                       TextColor="White"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="Всего привычек"
+                                       FontSize="12"
+                                       TextColor="#FFFFFF99"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- Выполнено сегодня -->
+                        <Border Grid.Row="0" Grid.Column="1"
+                                BackgroundColor="#2E2E2E"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="15">
+                            <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                                <Label Text="{Binding CompletedToday}"
+                                       FontSize="20"
+                                       FontAttributes="Bold"
+                                       TextColor="White"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="Выполнено сегодня"
+                                       FontSize="12"
+                                       TextColor="#FFFFFF99"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- Общий прогресс -->
+                        <Border Grid.Row="1" Grid.Column="0"
+                                BackgroundColor="#2E2E2E"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="15">
+                            <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                                <Label Text="{Binding TotalProgress}"
+                                       FontSize="20"
+                                       FontAttributes="Bold"
+                                       TextColor="White"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="Общий прогресс"
+                                       FontSize="12"
+                                       TextColor="#FFFFFF99"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- Пропущено -->
+                        <Border Grid.Row="1" Grid.Column="1"
+                                BackgroundColor="#2E2E2E"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="15">
+                            <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                                <Label Text="{Binding MissedCount}"
+                                       FontSize="20"
+                                       FontAttributes="Bold"
+                                       TextColor="White"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="Пропущено"
+                                       FontSize="12"
+                                       TextColor="#FFFFFF99"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Прогресс по привычкам -->
+            <Border BackgroundColor="#1E1E1E"
+                    Stroke="#666666"
+                    StrokeShape="RoundRectangle 8"
+                    Padding="16">
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Прогресс по привычкам"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="White"/>
+
+                    <VerticalStackLayout x:Name="HabitsProgressContainer" 
+                                       Spacing="10"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- График прогресса за неделю -->
+            <Border x:Name="WeekChartBorder"
+        BackgroundColor="#1E1E1E"
+        Stroke="#666666"
+        StrokeShape="RoundRectangle 8"
+        Padding="16">
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Прогресс за неделю"
+               FontSize="16"
+               FontAttributes="Bold"
+               TextColor="White"/>
+
+                    <!-- Простой график -->
+                    <Grid x:Name="WeekChartContainer" 
+              HeightRequest="120"
+              RowDefinitions="*,Auto"
+              ColumnDefinitions="*,*,*,*,*,*,*"
+              ColumnSpacing="5">
+
+                        <!-- Столбцы графика будут добавляться динамически -->
+                        <Label Grid.Row="1" Grid.Column="0" Text="Пн" FontSize="10" TextColor="#FFFFFF99" HorizontalOptions="Center"/>
+                        <Label Grid.Row="1" Grid.Column="1" Text="Вт" FontSize="10" TextColor="#FFFFFF99" HorizontalOptions="Center"/>
+                        <Label Grid.Row="1" Grid.Column="2" Text="Ср" FontSize="10" TextColor="#FFFFFF99" HorizontalOptions="Center"/>
+                        <Label Grid.Row="1" Grid.Column="3" Text="Чт" FontSize="10" TextColor="#FFFFFF99" HorizontalOptions="Center"/>
+                        <Label Grid.Row="1" Grid.Column="4" Text="Пт" FontSize="10" TextColor="#FFFFFF99" HorizontalOptions="Center"/>
+                        <Label Grid.Row="1" Grid.Column="5" Text="Сб" FontSize="10" TextColor="#FFFFFF99" HorizontalOptions="Center"/>
+                        <Label Grid.Row="1" Grid.Column="6" Text="Вс" FontSize="10" TextColor="#FFFFFF99" HorizontalOptions="Center"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Аналитика времени -->
+            <Border BackgroundColor="#1E1E1E"
+                    Stroke="#666666"
+                    StrokeShape="RoundRectangle 8"
+                    Padding="16">
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Аналитика времени"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="White"/>
+
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="*,*" 
+                          ColumnSpacing="15" RowSpacing="10">
+
+                        <!-- Всего времени -->
+                        <Border Grid.Row="0" Grid.Column="0"
+                                BackgroundColor="#2E2E2E"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="15">
+                            <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                                <Label x:Name="TotalTimeLabel"
+                                       Text="0 ч"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="White"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="Всего времени"
+                                       FontSize="12"
+                                       TextColor="#FFFFFF99"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- В среднем в день -->
+                        <Border Grid.Row="0" Grid.Column="1"
+                                BackgroundColor="#2E2E2E"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="15">
+                            <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                                <Label x:Name="AverageTimeLabel"
+                                       Text="0 мин"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="White"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="В среднем в день"
+                                       FontSize="12"
+                                       TextColor="#FFFFFF99"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- Самая продуктивная привычка -->
+                        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                BackgroundColor="#2E2E2E"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="15">
+                            <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                                <Label x:Name="MostProductiveLabel"
+                                       Text="Нет данных"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="White"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="Самая продуктивная привычка"
+                                       FontSize="12"
+                                       TextColor="#FFFFFF99"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

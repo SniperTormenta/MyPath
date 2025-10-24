@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using MyPath.Services;
 
 namespace MyPath
 {
@@ -15,8 +16,9 @@ namespace MyPath
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

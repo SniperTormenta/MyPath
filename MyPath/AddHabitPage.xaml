@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="MyPath.AddHabitPage"
+             Title="Добавить привычку"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="20">
+
+            <!-- Заголовок -->
+            <Label Text="Новая привычка" 
+                   TextColor="White"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <!-- Название привычки -->
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Название привычки *" 
+                       TextColor="#FFFFFF99"
+                       FontSize="14"/>
+                <Entry x:Name="TitleEntry"
+                       Placeholder="Например: Читать книгу"
+                       PlaceholderColor="#666666"
+                       TextColor="White" />
+            </VerticalStackLayout>
+
+            <!-- Описание -->
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Описание (необязательно)" 
+                       TextColor="#FFFFFF99"
+                       FontSize="14"/>
+                <Editor x:Name="DescriptionEditor"
+                        Placeholder="Краткое описание вашей привычки..."
+                        PlaceholderColor="#666666"
+                        TextColor="White"
+                        HeightRequest="80"/>
+            </VerticalStackLayout>
+
+            <!-- Категория -->
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Категория" 
+                       TextColor="#FFFFFF99"
+                       FontSize="14"/>
+                <Picker x:Name="CategoryPicker"
+                        Title="Выберите категорию"
+                        TextColor="White"/>
+            </VerticalStackLayout>
+
+            <!-- Цвет -->
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Цвет привычки" 
+                       TextColor="#FFFFFF99"
+                       FontSize="14"/>
+                <FlexLayout x:Name="ColorsContainer" 
+                           Wrap="Wrap" 
+                           JustifyContent="Start"
+                           AlignItems="Start"/>
+            </VerticalStackLayout>
+
+            <!-- Расширенные настройки -->
+            <Border BackgroundColor="#1E1E1E" 
+                    Stroke="#666666"
+                    StrokeShape="RoundRectangle 8">
+                <VerticalStackLayout>
+                    <!-- Заголовок расширенных настроек -->
+                    <Grid Padding="16" 
+                          ColumnDefinitions="*,Auto"
+                          BackgroundColor="Transparent">
+                        <Label Grid.Column="0"
+                               Text="Расширенные настройки"
+                               TextColor="White"
+                               FontSize="16"
+                               FontAttributes="Bold"/>
+                        <Label x:Name="ExpandCollapseIcon"
+                               Grid.Column="1"
+                               Text="▶"
+                               TextColor="#FFFFFF99"
+                               FontSize="16"
+                               VerticalOptions="Center"/>
+                    </Grid>
+
+                    <!-- Контент расширенных настроек (скрыт по умолчанию) -->
+                    <VerticalStackLayout x:Name="AdvancedSettingsContent" 
+                                 IsVisible="False"
+                                 Spacing="16"
+                                 Padding="16,0,16,16">
+
+                        <!-- Разделитель -->
+                        <BoxView HeightRequest="1" 
+                                 Color="#666666" 
+                                 HorizontalOptions="Fill"/>
+
+                        <!-- Длительность (теперь необязательная) -->
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="Длительность (необязательно)" 
+                                   TextColor="#FFFFFF99"
+                                   FontSize="14"/>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Border Grid.Column="0"
+                                        BackgroundColor="#1E1E1E"
+                                        Padding="12"
+                                        Stroke="#666666"
+                                        StrokeShape="RoundRectangle 8">
+                                    <Label x:Name="DurationLabel"
+                                           Text="Не задано"
+                                           TextColor="#FFFFFF99"
+                                           FontSize="16"/>
+                                </Border>
+                                <Button Grid.Column="1"
+                                        Text="⏱️"
+                                        BackgroundColor="#666666"
+                                        TextColor="White"
+                                        WidthRequest="48"
+                                        HeightRequest="48"
+                                        CornerRadius="24"
+                                        FontSize="16"
+                                        Margin="10,0,0,0"
+                                        Clicked="OnDurationClicked"/>
+                            </Grid>
+                        </VerticalStackLayout>
+
+                        <!-- Напоминание - дни недели -->
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="Напоминать в дни:" 
+                                   TextColor="#FFFFFF99"
+                                   FontSize="14"/>
+
+                            <!-- Дни недели -->
+                            <Grid ColumnDefinitions="*,*,*,*,*,*,*" 
+                                  ColumnSpacing="8"
+                                  RowSpacing="8">
+
+                                <Border x:Name="MondayBorder"
+                                        Grid.Column="0"
+                                        BackgroundColor="#2E2E2E"
+                                        Stroke="#666666"
+                                        StrokeShape="RoundRectangle 8"
+                                        Padding="8">
+                                    <Label Text="Пн" 
+                                           TextColor="#FFFFFF99"
+                                           HorizontalOptions="Center"
+                                           FontSize="12"/>
+                                </Border>
+
+                                <Border x:Name="TuesdayBorder"
+                                        Grid.Column="1"
+                                        BackgroundColor="#2E2E2E"
+                                        Stroke="#666666"
+                                        StrokeShape="RoundRectangle 8"
+                                        Padding="8">
+                                    <Label Text="Вт" 
+                                           TextColor="#FFFFFF99"
+                                           HorizontalOptions="Center"
+                                           FontSize="12"/>
+                                </Border>
+
+                                <Border x:Name="WednesdayBorder"
+                                        Grid.Column="2"
+                                        BackgroundColor="#2E2E2E"
+                                        Stroke="#666666"
+                                        StrokeShape="RoundRectangle 8"
+                                        Padding="8">
+                                    <Label Text="Ср" 
+                                           TextColor="#FFFFFF99"
+                                           HorizontalOptions="Center"
+                                           FontSize="12"/>
+                                </Border>
+
+                                <Border x:Name="ThursdayBorder"
+                                        Grid.Column="3"
+                                        BackgroundColor="#2E2E2E"
+                                        Stroke="#666666"
+                                        StrokeShape="RoundRectangle 8"
+                                        Padding="8">
+                                    <Label Text="Чт" 
+                                           TextColor="#FFFFFF99"
+                                           HorizontalOptions="Center"
+                                           FontSize="12"/>
+                                </Border>
+
+                                <Border x:Name="FridayBorder"
+                                        Grid.Column="4"
+                                        BackgroundColor="#2E2E2E"
+                                        Stroke="#666666"
+                                        StrokeShape="RoundRectangle 8"
+                                        Padding="8">
+                                    <Label Text="Пт" 
+                                           TextColor="#FFFFFF99"
+                                           HorizontalOptions="Center"
+                                           FontSize="12"/>
+                                </Border>
+
+                                <Border x:Name="SaturdayBorder"
+                                        Grid.Column="5"
+                                        BackgroundColor="#2E2E2E"
+                                        Stroke="#666666"
+                                        StrokeShape="RoundRectangle 8"
+                                        Padding="8">
+                                    <Label Text="Сб" 
+                                           TextColor="#FFFFFF99"
+                                           HorizontalOptions="Center"
+                                           FontSize="12"/>
+                                </Border>
+
+                                <Border x:Name="SundayBorder"
+                                        Grid.Column="6"
+                                        BackgroundColor="#2E2E2E"
+                                        Stroke="#666666"
+                                        StrokeShape="RoundRectangle 8"
+                                        Padding="8">
+                                    <Label Text="Вс" 
+                                           TextColor="#FFFFFF99"
+                                           HorizontalOptions="Center"
+                                           FontSize="12"/>
+                                </Border>
+
+                            </Grid>
+
+                            <!-- Кнопки выбора всех/очистки -->
+                            <Grid ColumnDefinitions="*,*" 
+                                  ColumnSpacing="8"
+                                  Margin="0,8,0,0">
+                                <Button Grid.Column="0"
+                                        Text="Все дни"
+                                        BackgroundColor="#666666"
+                                        TextColor="White"
+                                        FontSize="12"
+                                        HeightRequest="32"
+                                        Clicked="OnSelectAllDaysClicked"/>
+                                <Button Grid.Column="1"
+                                        Text="Очистить"
+                                        BackgroundColor="#666666"
+                                        TextColor="White"
+                                        FontSize="12"
+                                        HeightRequest="32"
+                                        Clicked="OnClearDaysClicked"/>
+                            </Grid>
+
+                            <!-- Время напоминания -->
+                            <Grid ColumnDefinitions="*,Auto" 
+                                  ColumnSpacing="8"
+                                  Margin="0,8,0,0">
+                                <Border Grid.Column="0"
+                                        BackgroundColor="#1E1E1E"
+                                        Padding="12"
+                                        Stroke="#666666"
+                                        StrokeShape="RoundRectangle 8">
+                                    <Label x:Name="ReminderTimeLabel"
+                                           Text="Время: 09:00"
+                                           TextColor="#FFFFFF99"
+                                           FontSize="14"/>
+                                </Border>
+                                <Button Grid.Column="1"
+                                        Text="🕒"
+                                        BackgroundColor="#666666"
+                                        TextColor="White"
+                                        WidthRequest="48"
+                                        HeightRequest="48"
+                                        CornerRadius="24"
+                                        FontSize="16"
+                                        Clicked="OnReminderTimeClicked"/>
+                            </Grid>
+
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAdvancedSettingsTapped"/>
+                </Border.GestureRecognizers>
+            </Border>
+
+            <!-- Кнопки -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Button Grid.Column="0"
+                        Text="Отмена"
+                        BackgroundColor="#666666"
+                        TextColor="White"
+                        Clicked="OnCancelClicked"/>
+                <Button Grid.Column="1"
+                        Text="Сохранить"
+                        BackgroundColor="#FF5E5E"
+                        TextColor="White"
+                        Clicked="OnSaveClicked"/>
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

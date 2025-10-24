@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="MyPath.ProfilePage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Профиль">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="16">
+
+            <!-- Profile Info -->
+            <Border BackgroundColor="#1E1E1E"
+                    Stroke="#666666"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="20">
+                <VerticalStackLayout Spacing="16">
+
+                    <!-- Avatar Section -->
+                    <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
+                        <Border WidthRequest="120"
+                                HeightRequest="120"
+                                StrokeShape="RoundRectangle 60"
+                                BackgroundColor="#2E2E2E"
+                                Stroke="#7EC6FF"
+                                StrokeThickness="2"
+                                HorizontalOptions="Center">
+
+                            <Image x:Name="AvatarImage"
+                                   Source="default_avatar.png"
+                                   Aspect="AspectFill">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnAvatarTapped"/>
+                                </Image.GestureRecognizers>
+                            </Image>
+
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Name Editor -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Имя" 
+                               TextColor="#FFFFFF99"
+                               FontSize="14"/>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Entry x:Name="NameEntry"
+                                   Text="Александр К."
+                                   TextColor="White"
+                                   BackgroundColor="#2E2E2E"
+                                   Placeholder="Введите ваше имя"
+                                   PlaceholderColor="#666666"/>
+                            <Button Grid.Column="1"
+                                    Text="💾"
+                                    BackgroundColor="#7EC6FF"
+                                    TextColor="White"
+                                    WidthRequest="40"
+                                    Margin="10,0,0,0"
+                                    Clicked="OnSaveNameClicked"/>
+                        </Grid>
+                    </VerticalStackLayout>
+
+                    <!-- Quote Section -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Мотивирующая цитата" 
+                               TextColor="#FFFFFF99"
+                               FontSize="14"/>
+
+                        <Border BackgroundColor="#2E2E2E"
+                                Stroke="#666666"
+                                StrokeShape="RoundRectangle 8"
+                                Padding="12">
+                            <Label x:Name="QuoteLabel"
+                                   Text="«Победа над собой начинается с победы над своей ленью.»"
+                                   TextColor="#FFFFFF99"
+                                   FontSize="14"
+                                   FontAttributes="Italic"
+                                   HorizontalTextAlignment="Center"/>
+                        </Border>
+
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                            <Button Grid.Column="0"
+                                    Text="🔄 Новая цитата"
+                                    BackgroundColor="#666666"
+                                    TextColor="White"
+                                    HeightRequest="36"
+                                    FontSize="12"
+                                    Clicked="OnNewQuoteClicked"/>
+                            <Button Grid.Column="1"
+                                    Text="📝 Мои цитаты"
+                                    BackgroundColor="#666666"
+                                    TextColor="White"
+                                    HeightRequest="36"
+                                    FontSize="12"
+                                    Clicked="OnMyQuotesClicked"/>
+                        </Grid>
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Progress Stats -->
+            <Border BackgroundColor="#1E1E1E"
+                    Stroke="#666666"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="20">
+                <VerticalStackLayout Spacing="20">
+                    <Label Text="Мой прогресс" 
+                           TextColor="White"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+
+                    <!-- Total Habits -->
+                    <VerticalStackLayout Spacing="8">
+                        <Grid>
+                            <Label Text="Всего привычек" 
+                                   TextColor="#FFFFFF99"
+                                   FontSize="14"/>
+                            <Label x:Name="TotalHabitsLabel"
+                                   Text="0"
+                                   TextColor="#7EC6FF"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="End"/>
+                        </Grid>
+                        <Border BackgroundColor="#2E2E2E"
+                                Stroke="Transparent"
+                                StrokeShape="RoundRectangle 4"
+                                HeightRequest="8">
+                            <BoxView x:Name="TotalHabitsProgress"
+                                     Color="#7EC6FF"
+                                     WidthRequest="0"
+                                     HorizontalOptions="Start"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Completed Today -->
+                    <VerticalStackLayout Spacing="8">
+                        <Grid>
+                            <Label Text="Выполнено сегодня" 
+                                   TextColor="#FFFFFF99"
+                                   FontSize="14"/>
+                            <Label x:Name="CompletedTodayLabel"
+                                   Text="0"
+                                   TextColor="#4CAF50"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="End"/>
+                        </Grid>
+                        <Border BackgroundColor="#2E2E2E"
+                                Stroke="Transparent"
+                                StrokeShape="RoundRectangle 4"
+                                HeightRequest="8">
+                            <BoxView x:Name="CompletedTodayProgress"
+                                     Color="#4CAF50"
+                                     WidthRequest="0"
+                                     HorizontalOptions="Start"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Actions -->
+            <Border BackgroundColor="#1E1E1E"
+                    Stroke="#666666"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="20">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Действия" 
+                           TextColor="White"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+
+                    <Button x:Name="TestNotificationButton"
+                            Text="🔔 Тестовое уведомление"
+                            BackgroundColor="#666666"
+                            TextColor="White"
+                            HeightRequest="44"
+                            CornerRadius="8"
+                            FontSize="16"
+                            Clicked="OnTestNotificationClicked"/>
+
+                    <Button Text="📤 Экспорт данных"
+                            BackgroundColor="#666666"
+                            TextColor="White"
+                            HeightRequest="44"
+                            CornerRadius="8"
+                            FontSize="16"
+                            Clicked="OnExportDataClicked"/>
+
+                    <Button Text="🔄 Сбросить прогресс"
+                            BackgroundColor="#FF5E5E"
+                            TextColor="White"
+                            HeightRequest="44"
+                            CornerRadius="8"
+                            FontSize="16"
+                            Clicked="OnResetProgressClicked"/>
+
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

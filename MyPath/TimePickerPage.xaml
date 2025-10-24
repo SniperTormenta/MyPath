@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="MyPath.TimePickerPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Выберите время">
+
+    <VerticalStackLayout Spacing="20" Padding="20">
+
+        <Label Text="Выберите время напоминания"
+               FontSize="18"
+               FontAttributes="Bold"
+               HorizontalOptions="Center" />
+
+        <Grid ColumnDefinitions="*,*" 
+              ColumnSpacing="10"
+              HorizontalOptions="Center">
+
+            <!-- Часы -->
+            <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                <Label Text="Часы" 
+                       FontSize="14"
+                       HorizontalOptions="Center"/>
+                <Picker x:Name="HoursPicker"
+                        Title="Час"
+                        HorizontalOptions="Center"
+                        WidthRequest="100"/>
+            </VerticalStackLayout>
+
+            <!-- Минуты -->
+            <VerticalStackLayout Spacing="5" HorizontalOptions="Center" Grid.Column="1">
+                <Label Text="Минуты" 
+                       FontSize="14"
+                       HorizontalOptions="Center"/>
+                <Picker x:Name="MinutesPicker"
+                        Title="Мин"
+                        HorizontalOptions="Center"
+                        WidthRequest="100"/>
+            </VerticalStackLayout>
+
+        </Grid>
+
+        <!-- Выбранное время -->
+        <Border BackgroundColor="#1E1E1E"
+                Stroke="#666666"
+                StrokeShape="RoundRectangle 8"
+                Padding="15"
+                HorizontalOptions="Center">
+            <Label x:Name="SelectedTimeLabel"
+                   Text="00:00"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="White"/>
+        </Border>
+
+        <!-- Кнопки -->
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+            <Button x:Name="CancelButton"
+                    Text="Отмена"
+                    BackgroundColor="#666666"
+                    TextColor="White"
+                    Grid.Column="0"/>
+            <Button x:Name="OkButton"
+                    Text="OK"
+                    BackgroundColor="#FF5E5E"
+                    TextColor="White"
+                    Grid.Column="1"/>
+        </Grid>
+
+    </VerticalStackLayout>
+
+</ContentPage>

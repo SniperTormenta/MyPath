@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage x:Class="MyPath.MainPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MyPath.MainPage">
+             x:Name="ThisPage">
 
     <Grid RowDefinitions="Auto,*,Auto,Auto">
 
         <!-- Header -->
-        <Frame Grid.Row="0" 
+        <Border Grid.Row="0" 
                BackgroundColor="#121212C8" 
                Padding="16"
-               HasShadow="False"
-               BorderColor="Transparent">
+               Stroke="Transparent">
             <Grid>
                 <Label Text="Путь Самурая" 
                        HorizontalOptions="Center"
@@ -18,142 +18,62 @@
                        TextColor="White"
                        FontSize="20"
                        FontAttributes="Bold"/>
-                <Button HorizontalOptions="End"
-                        BackgroundColor="Transparent"
-                        Text="⚙️"
-                        FontSize="20"/>
             </Grid>
-        </Frame>
+        </Border>
 
         <!-- Main Content -->
         <ScrollView Grid.Row="1" Padding="16">
-            <StackLayout Spacing="24">
+            <VerticalStackLayout Spacing="24">
 
                 <!-- Day Progress -->
-                <StackLayout Spacing="8" HorizontalOptions="Center">
-                    <Label Text="День 15" 
+                <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                    <Label Text="День 0" 
                            TextColor="White" 
                            FontSize="32"
                            FontAttributes="Bold"
                            HorizontalOptions="Center"/>
-                    <Label Text="Прогресс за сегодня: 60%" 
+                    <Label x:Name="ProgressLabel"
+                           Text="Прогресс за сегодня: 0%" 
                            TextColor="#FFFFFF99"
                            HorizontalOptions="Center"/>
 
                     <!-- Progress Bar -->
-                    <Frame BackgroundColor="#1E1E1E" 
+                    <Border BackgroundColor="#1E1E1E" 
                            HeightRequest="10"
                            Padding="0"
-                           BorderColor="Transparent"
-                           CornerRadius="5">
-                        <BoxView Color="#7EC6FF" 
-                                 WidthRequest="180"
-                                 CornerRadius="5"
+                           Stroke="Transparent"
+                           StrokeShape="RoundRectangle 5">
+                        <BoxView x:Name="ProgressBox"
+                                 Color="#7EC6FF" 
+                                 WidthRequest="0"
                                  HorizontalOptions="Start"/>
-                    </Frame>
-                </StackLayout>
+                    </Border>
+                </VerticalStackLayout>
 
                 <!-- Habits List -->
-                <StackLayout Spacing="16">
+                <VerticalStackLayout x:Name="HabitsContainer" Spacing="16">
+                    <!-- Привычки будут добавляться динамически -->
+                </VerticalStackLayout>
 
-                    <!-- Habit 1 -->
-                    <Frame BackgroundColor="#1E1E1E" 
-                           CornerRadius="12"
-                           Padding="16"
-                           BorderColor="Transparent">
-                        <Grid ColumnDefinitions="*,Auto">
-                            <StackLayout Grid.Column="0">
-                                <Label Text="Привычка 1" 
-                                       TextColor="#FFFFFF99"
-                                       FontSize="14"/>
-                                <Label Text="Читать книгу" 
-                                       TextColor="White"
-                                       FontSize="18"
-                                       FontAttributes="Bold"/>
-                                <Label Text="30 минут" 
-                                       TextColor="#FFFFFF99"
-                                       FontSize="14"/>
-                            </StackLayout>
-                            <Button Grid.Column="1"
-                                    BackgroundColor="#FF5E5E"
-                                    Text="✓"
-                                    TextColor="White"
-                                    WidthRequest="48"
-                                    HeightRequest="48"
-                                    CornerRadius="24"
-                                    FontSize="20"/>
-                        </Grid>
-                    </Frame>
-
-                    <!-- Habit 2 -->
-                    <Frame BackgroundColor="#1E1E1E" 
-                           CornerRadius="12"
-                           Padding="16"
-                           BorderColor="Transparent">
-                        <Grid ColumnDefinitions="*,Auto">
-                            <StackLayout Grid.Column="0">
-                                <Label Text="Привычка 2" 
-                                       TextColor="#FFFFFF99"
-                                       FontSize="14"/>
-                                <Label Text="Медитация" 
-                                       TextColor="White"
-                                       FontSize="18"
-                                       FontAttributes="Bold"/>
-                                <Label Text="15 минут" 
-                                       TextColor="#FFFFFF99"
-                                       FontSize="14"/>
-                            </StackLayout>
-                            <Frame Grid.Column="1"
-                                   BackgroundColor="Transparent"
-                                   BorderColor="#FFFFFF99"
-                                   WidthRequest="48"
-                                   HeightRequest="48"
-                                   CornerRadius="24"
-                                   Padding="0">
-                                <Label Text="✓" 
-                                       TextColor="#FFFFFF99"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center"
-                                       FontSize="20"/>
-                            </Frame>
-                        </Grid>
-                    </Frame>
-
-                    <!-- Habit 3 -->
-                    <Frame BackgroundColor="#1E1E1E" 
-                           CornerRadius="12"
-                           Padding="16"
-                           BorderColor="Transparent">
-                        <Grid ColumnDefinitions="*,Auto">
-                            <StackLayout Grid.Column="0">
-                                <Label Text="Привычка 3" 
-                                       TextColor="#FFFFFF99"
-                                       FontSize="14"/>
-                                <Label Text="Физические упражнения" 
-                                       TextColor="White"
-                                       FontSize="18"
-                                       FontAttributes="Bold"/>
-                                <Label Text="30 минут" 
-                                       TextColor="#FFFFFF99"
-                                       FontSize="14"/>
-                            </StackLayout>
-                            <Frame Grid.Column="1"
-                                   BackgroundColor="Transparent"
-                                   BorderColor="#FFFFFF99"
-                                   WidthRequest="48"
-                                   HeightRequest="48"
-                                   CornerRadius="24"
-                                   Padding="0">
-                                <Label Text="✓" 
-                                       TextColor="#FFFFFF99"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center"
-                                       FontSize="20"/>
-                            </Frame>
-                        </Grid>
-                    </Frame>
-
-                </StackLayout>
+                <!-- Empty State -->
+                <VerticalStackLayout x:Name="EmptyState" 
+                             IsVisible="False"
+                             Spacing="16"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center">
+                    <Label Text="📝" 
+                           FontSize="48"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Пока нет привычек" 
+                           TextColor="#FFFFFF99"
+                           FontSize="18"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Добавьте первую привычку, нажав на кнопку ниже" 
+                           TextColor="#666666"
+                           FontSize="14"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center"/>
+                </VerticalStackLayout>
 
                 <!-- Quote -->
                 <Label Text="&quot;Путь в тысячи километров начинается с одного шага.&quot;" 
@@ -163,7 +83,7 @@
                        HorizontalOptions="Center"
                        HorizontalTextAlignment="Center"/>
 
-            </StackLayout>
+            </VerticalStackLayout>
         </ScrollView>
 
         <!-- Add Button -->
@@ -177,7 +97,8 @@
                 FontSize="32"
                 HorizontalOptions="End"
                 Margin="16"
-                VerticalOptions="End"/>
+                VerticalOptions="End"
+                Clicked="OnAddHabitClicked"/>
 
         <!-- Bottom Navigation -->
         <Grid Grid.Row="3" 
@@ -186,50 +107,66 @@
               HeightRequest="60">
 
             <!-- Home -->
-            <StackLayout Grid.Column="0" 
-                         Spacing="4"
-                         HorizontalOptions="Center"
-                         VerticalOptions="Center">
-                <Label Text="🏠" 
-                       FontSize="20"
-                       HorizontalOptions="Center"/>
-                <Label Text="Главная" 
-                       TextColor="#7EC6FF"
-                       FontSize="12"
-                       FontAttributes="Bold"
-                       HorizontalOptions="Center"/>
-            </StackLayout>
+            <Border Grid.Column="0" 
+                    BackgroundColor="Transparent"
+                    Stroke="Transparent">
+                <VerticalStackLayout Spacing="4"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center">
+                    <Label Text="🏠" 
+                           FontSize="20"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Главная" 
+                           TextColor="#7EC6FF"
+                           FontSize="12"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Border>
 
             <!-- Statistics -->
-            <StackLayout Grid.Column="1" 
-                         Spacing="4"
-                         HorizontalOptions="Center"
-                         VerticalOptions="Center">
-                <Label Text="📊" 
-                       FontSize="20"
-                       HorizontalOptions="Center"/>
-                <Label Text="Статистика" 
-                       TextColor="#FFFFFF99"
-                       FontSize="12"
-                       HorizontalOptions="Center"/>
-            </StackLayout>
+            <Border Grid.Column="1" 
+                    BackgroundColor="Transparent"
+                    Stroke="Transparent">
+                <VerticalStackLayout Spacing="4"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center">
+                    <Label Text="📊" 
+                           FontSize="20"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Статистика" 
+                           TextColor="#FFFFFF99"
+                           FontSize="12"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnStatisticsTapped"/>
+                </Border.GestureRecognizers>
+            </Border>
 
             <!-- Profile -->
-            <StackLayout Grid.Column="2" 
-                         Spacing="4"
-                         HorizontalOptions="Center"
-                         VerticalOptions="Center">
-                <Label Text="👤" 
-                       FontSize="20"
-                       HorizontalOptions="Center"/>
-                <Label Text="Профиль" 
-                       TextColor="#FFFFFF99"
-                       FontSize="12"
-                       HorizontalOptions="Center"/>
-            </StackLayout>
+            <Border Grid.Column="2" 
+                    BackgroundColor="Transparent"
+                    Stroke="Transparent">
+                <VerticalStackLayout Spacing="4"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center">
+                    <Label Text="👤" 
+                           FontSize="20"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Профиль" 
+                           TextColor="#FFFFFF99"
+                           FontSize="12"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnProfileTapped"/>
+                </Border.GestureRecognizers>
+            </Border>
 
         </Grid>
 
     </Grid>
-
 </ContentPage>
