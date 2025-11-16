@@ -1,12 +1,17 @@
-﻿namespace MyPath;
+﻿using MyPath.Services;
+
+namespace MyPath;
 
 public partial class ProfilePage : ContentPage
 {
+
     private UserProfile _userProfile;
 
+    private readonly NotificationService _notificationService;
     public ProfilePage()
     {
         InitializeComponent();
+        _notificationService = new NotificationService();
         LoadProfileData();
     }
 
@@ -133,15 +138,18 @@ OnChangePhotoClicked(object sender, EventArgs e)
     {
         try
         {
-            // Визуальная обратная связь
-            TestNotificationButton.BackgroundColor = Color.FromArgb("#4CAF50");
+            TestNotificationButton.BackgroundColor = Colors.Green;
             TestNotificationButton.Text = "⏳ Отправка...";
+            TestNotificationButton.IsEnabled = false;
+
+            // Запрашиваем разрешение
+            var hasPermission = await _notificationService.RequestNotificationPermission();
 
             var habits = HabitService.Instance.Habits;
 
             if (habits.Count == 0)
             {
-                await Services.NotificationService.ShowTestNotification(
+                await _notificationService.ShowTestNotification(
                     "😔 Нет привычек",
                     "«Путь в тысячи километров начинается с первого шага. Самое время добавить первую привычку!»"
                 );
@@ -150,38 +158,38 @@ OnChangePhotoClicked(object sender, EventArgs e)
             {
                 var random = new Random();
                 var randomHabit = habits[random.Next(habits.Count)];
+                // Используем существующий метод GetRandomNotification
                 var notification = GetRandomNotification(randomHabit.Title);
-
-                await Services.NotificationService.ShowTestNotification(notification.Title, notification.Message);
+                await _notificationService.ShowTestNotification(notification.Title, notification.Message);
             }
-
-            // Возвращаем исходный вид
-            TestNotificationButton.BackgroundColor = Color.FromArgb("#666666");
-            TestNotificationButton.Text = "🔔 Тестовое уведомление";
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Ошибка", "Не удалось отправить уведомление", "OK");
+            await DisplayAlert("Ошибка", $"Не удалось отправить уведомление: {ex.Message}", "OK");
+        }
+        finally
+        {
             TestNotificationButton.BackgroundColor = Color.FromArgb("#666666");
             TestNotificationButton.Text = "🔔 Тестовое уведомление";
+            TestNotificationButton.IsEnabled = true;
         }
     }
 
     private (string Title, string Message) GetRandomNotification(string habitName)
     {
         var notifications = new List<(string Title, string Message)>
-        {
-            ($"⏰ Напоминание: {habitName}", $"Самое время выполнить '{habitName}'. Не откладывай на потом!"),
-            ($"🎯 Время для {habitName}", $"Твоя привычка '{habitName}' ждет тебя. Сделай это сейчас!"),
-            ($"💪 {habitName} зовет!", $"Не пропускай '{habitName}'. Каждый шаг важен на пути самурая!"),
-            ($"🌟 Пора заняться {habitName}", $"Привычка '{habitName}' - это твой вклад в лучшее будущее!"),
-            ($"📅 Напоминание о {habitName}", $"Помни о своей цели! '{habitName}' ждет выполнения."),
-            ($"⚡ Время действовать!", $"Привычка '{habitName}' требует внимания. Не подведи себя!"),
-            ($"🎖️ Вызов принят: {habitName}", $"Самурай не отступает! Выполни '{habitName}' прямо сейчас!"),
-            ($"🌅 Утренний ритуал: {habitName}", $"Начни день с '{habitName}'. Это задаст тон всему дню!"),
-            ($"🌙 Вечерняя практика: {habitName}", $"Заверши день с '{habitName}'. Иди спать победителем!"),
-            ($"🔄 Не прерывай цепь: {habitName}", $"Твоя серия под угрозой! Выполни '{habitName}' сегодня!")
-        };
+    {
+        ($"⏰ Напоминание: {habitName}", $"Самое время выполнить '{habitName}'. Не откладывай на потом!"),
+        ($"🎯 Время для {habitName}", $"Твоя привычка '{habitName}' ждет тебя. Сделай это сейчас!"),
+        ($"💪 {habitName} зовет!", $"Не пропускай '{habitName}'. Каждый шаг важен на пути самурая!"),
+        ($"🌟 Пора заняться {habitName}", $"Привычка '{habitName}' - это твой вклад в лучшее будущее!"),
+        ($"📅 Напоминание о {habitName}", $"Помни о своей цели! '{habitName}' ждет выполнения."),
+        ($"⚡ Время действовать!", $"Привычка '{habitName}' требует внимания. Не подведи себя!"),
+        ($"🎖️ Вызов принят: {habitName}", $"Самурай не отступает! Выполни '{habitName}' прямо сейчас!"),
+        ($"🌅 Утренний ритуал: {habitName}", $"Начни день с '{habitName}'. Это задаст тон всему дню!"),
+        ($"🌙 Вечерняя практика: {habitName}", $"Заверши день с '{habitName}'. Иди спать победителем!"),
+        ($"🔄 Не прерывай цепь: {habitName}", $"Твоя серия под угрозой! Выполни '{habitName}' сегодня!")
+    };
 
         var random = new Random();
         return notifications[random.Next(notifications.Count)];

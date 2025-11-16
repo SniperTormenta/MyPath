@@ -1,31 +1,53 @@
-﻿namespace MyPath.Services;
+﻿using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.Controls;
 
-public static class NotificationService
+namespace MyPath.Services;
+
+public class NotificationService
 {
-    public static async Task ShowTestNotification(string title, string message)
+    public async Task<bool> RequestNotificationPermission()
     {
         try
         {
-            // Вибрация (если доступна)
+            // Просто проверяем доступность вибрации
+            return Vibration.Default.IsSupported;
+        }
+        catch (Exception ex)
+        {
+            return true;
+        }
+    }
+
+    public async Task ShowTestNotification(string title, string message)
+    {
+        try
+        {
+            // Вибрация
             try
             {
-                if (Microsoft.Maui.Devices.DeviceInfo.Platform == DevicePlatform.Android)
-                {
+                if (Vibration.Default.IsSupported)
                     Vibration.Default.Vibrate(TimeSpan.FromMilliseconds(200));
-                }
             }
             catch { }
 
-            // Показываем красивое уведомление
+            // Красивый алерт
             await Application.Current.MainPage.DisplayAlert(
                 $"🔔 {title}",
-                $"{message}\n\n📱 Это тестовое уведомление",
+                $"{message}\n\n" +
+                $"────────────────────\n" +
+                $"📱 Тестовое уведомление\n" +
+                $"⏰ {DateTime.Now:HH:mm}\n" +
+                $"────────────────────",
                 "OK");
         }
         catch (Exception ex)
         {
-            // Fallback
             await Application.Current.MainPage.DisplayAlert(title, message, "OK");
         }
+    }
+
+    public void CancelAllNotifications()
+    {
+        // Пустая реализация
     }
 }
